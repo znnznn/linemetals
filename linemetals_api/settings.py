@@ -40,6 +40,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'linemetals_api.urls'
+MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 TEMPLATES = [
     {
@@ -64,7 +67,7 @@ DATABASES = {
         "ENGINE": "mssql",
         "NAME": config("DATABASE_NAME"),
         "USER": config("DATABASE_USER"),
-        "PASSWORD": config("DATABASE_PASSWORD"),
+        "PASSWORD": config("MSSQL_SA_PASSWORD"),
         "HOST": config("DATABASE_HOST"),
         "PORT": config("DATABASE_PORT", default=1433, cast=int),
         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server"},

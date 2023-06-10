@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  db:
+    image: rapidfort/microsoft-sql-server-2019-ib:latest
+    hostname: db
+    domainname: db
+    env_file:
+      - .env
+    ports:
+      - "1433:1433"
+  web:
+    build: .
+    env_file:
+      - .env
+#    command: python manage.py migrate
+    command: sh -c "chmod +x ./entrypoint.sh && ./entrypoint.sh"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
