@@ -4,11 +4,10 @@
 # calling SQLCMD does not return an error code, which will ensure that sqlcmd is accessible
 # and that system and user databases return "0" which means all databases are in an "online" state
 # https://docs.microsoft.com/en-us/sql/relational-databases/system-catalog-views/sys-databases-transact-sql?view=sql-server-2017
-echo "Waiting for SQL Server...0"
+echo "Waiting for SQL Server..."
 DBSTATUS=1
 ERRCODE=1
 i=0
-echo "Waiting for SQL Server..."
 
 while [[ $DBSTATUS -ne 0 ]] && [[ $i -lt 60 ]] && [[ $ERRCODE -ne 0 ]]; do
   i=$i+1
