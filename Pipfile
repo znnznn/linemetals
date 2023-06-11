@@ -10,6 +10,7 @@ python-decouple = "*"
 mssql-django = "*"
 pyodbc = "*"
 drf-yasg = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

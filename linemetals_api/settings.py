@@ -1,6 +1,8 @@
 import pyodbc
-from pathlib import Path
+
+from datetime import timedelta
 from decouple import config
+from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +46,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 AUTH_USER_MODEL = "users.User"
+
 ROOT_URLCONF = 'linemetals_api.urls'
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
@@ -121,8 +125,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 20,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication', ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.JSONRenderer', ],
+    'PAGE_SIZE': 10,
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ACCESS_TOKEN_LIFETIME = config('ACCESS_TOKEN_LIFETIME', default=5, cast=int)
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=ACCESS_TOKEN_LIFETIME),
+    'REFRESH_TOKEN_LIFETIME': timedelta(weeks=1),
+    'UPDATE_LAST_LOGIN': False,
+    'TOKEN_OBTAIN_SERIALIZER': 'users.serializers.LoginSerializer',
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
