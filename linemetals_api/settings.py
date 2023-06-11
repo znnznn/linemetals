@@ -1,3 +1,4 @@
+import pyodbc
 from pathlib import Path
 from decouple import config
 
@@ -27,6 +28,7 @@ INSTALLED_APPS = [
 
     # Our apps
     'users',
+    'origindb',
 ]
 
 MIDDLEWARE = [
@@ -38,7 +40,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+AUTH_USER_MODEL = "users.User"
 ROOT_URLCONF = 'linemetals_api.urls'
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
@@ -70,7 +72,17 @@ DATABASES = {
         "PASSWORD": config("MSSQL_SA_PASSWORD"),
         "HOST": config("DATABASE_HOST"),
         "PORT": config("DATABASE_PORT", default=1433, cast=int),
-        "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server"},
+        "OPTIONS": {
+            "unicode_results": True,
+            "driver": "ODBC Driver 17 for SQL Server",
+            "setdecoding": [
+                {"sqltype": pyodbc.SQL_CHAR, "encoding": 'utf-8'},
+                {"sqltype": pyodbc.SQL_WCHAR, "encoding": 'utf-8'},
+            ],
+            "setencoding": [
+                {"encoding": "utf-8"}],
+        }
+        ,
     },
 }
 
@@ -100,8 +112,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

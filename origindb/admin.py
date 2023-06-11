@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from linemetals.origin_db.models import Arinv, Arinvdet, Inprodtype, Inventry
+from origindb.models import Arinv, Arinvdet, Inprodtype, Inventry
+
+# from linemetals.origindb.models import Arinv, Arinvdet, Inprodtype, Inventry
 
 admin.site.register(Arinv)
 admin.site.register(Arinvdet)

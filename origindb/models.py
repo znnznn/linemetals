@@ -221,7 +221,7 @@ class Arinvdet(models.Model):
 
 class Inprodtype(models.Model):
     inprodtype_guid = models.CharField(db_column='INPRODTYPE_GUID', primary_key=True, max_length=36)
-    recno5 = models.IntegerField(db_column='RECNO5')
+    recno5 = models.IntegerField(db_column='RECNO5', unique=True)
     prod_type = models.CharField(db_column='PROD_TYPE', max_length=20, db_collation='SQL_Latin1_General_CP1_CI_AS')
     ar_aid = models.CharField(db_column='AR_AID', max_length=16, db_collation='SQL_Latin1_General_CP1_CI_AS')
     autoid = models.CharField(db_column='AUTOID', max_length=16, db_collation='SQL_Latin1_General_CP1_CI_AS')
@@ -229,6 +229,8 @@ class Inprodtype(models.Model):
     class Meta:
         managed = False
         db_table = 'INPRODTYPE'
+        app_label = "origindb"
+        verbose_name = 'inprodtype'
 
 
 class Inventry(models.Model):
