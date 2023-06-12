@@ -5,8 +5,6 @@ WORKDIR /app
 
 COPY . .
 
-#RUN chmod +x ./entrypoint.sh
-
 ENV ACCEPT_EULA=Y
 
 RUN apt-get update &&  \
